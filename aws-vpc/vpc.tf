@@ -3,7 +3,7 @@ resource "aws_vpc" "vpc" {
   cidr_block       = "10.0.0.0/16"
 
   tags = {
-    Name = "login-vpc"
+    Name = "lms-vpc"
   }
 }
 
@@ -14,7 +14,7 @@ resource "aws_subnet" "fe-sn" {
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = "login-frontend-subnet"
+    Name = "lms-frontend-subnet"
   }
 }
 
@@ -25,7 +25,7 @@ resource "aws_subnet" "be-sn" {
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = "login-backend-subnet"
+    Name = "lms-backend-subnet"
   }
 }
 
@@ -36,7 +36,7 @@ resource "aws_subnet" "db-sn" {
   map_public_ip_on_launch = "false"
 
   tags = {
-    Name = "login-database-subnet"
+    Name = "lms-database-subnet"
   }
 }
 
@@ -45,7 +45,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "login-internet-gateway"
+    Name = "lms-internet-gateway"
   }
 }
 
@@ -59,7 +59,7 @@ resource "aws_route_table" "pub-rt" {
   }
 
   tags = {
-    Name = "login-public-rt"
+    Name = "lms-public-rt"
   }
 }
 
@@ -80,7 +80,7 @@ resource "aws_route_table" "pvt-rt" {
   vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "login-private-rt"
+    Name = "lms-private-rt"
   }
 }
 
@@ -113,7 +113,7 @@ resource "aws_network_acl" "nacl" {
   }
 
   tags = {
-    Name = "login-nacl"
+    Name = "lms-nacl"
   }
 }
 
