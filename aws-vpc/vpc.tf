@@ -62,3 +62,15 @@ resource "aws_route_table" "pub-rt" {
     Name = "login-public-rt"
   }
 }
+
+# Frontend Subnet Association 
+resource "aws_route_table_association" "fe-sn-asc" {
+  subnet_id      = aws_subnet.fe-sn.id
+  route_table_id = aws_route_table.pub-rt.id
+}
+
+# Backend Subnet Association 
+resource "aws_route_table_association" "be-sn-asc" {
+  subnet_id      = aws_subnet.be-sn.id
+  route_table_id = aws_route_table.pub-rt.id
+}
