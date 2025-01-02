@@ -74,3 +74,18 @@ resource "aws_route_table_association" "be-sn-asc" {
   subnet_id      = aws_subnet.be-sn.id
   route_table_id = aws_route_table.pub-rt.id
 }
+
+# Private Route Table
+resource "aws_route_table" "pvt-rt" {
+  vpc_id = aws_vpc.vpc.id
+
+  tags = {
+    Name = "login-private-rt"
+  }
+}
+
+# Frontend Subnet Association 
+resource "aws_route_table_association" "db-sn-asc" {
+  subnet_id      = aws_subnet.db-sn.id
+  route_table_id = aws_route_table.pvt-rt.id
+}
