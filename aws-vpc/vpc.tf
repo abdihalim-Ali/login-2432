@@ -28,3 +28,14 @@ resource "aws_subnet" "be-sn" {
     Name = "login-backend-subnet"
   }
 }
+
+# Database Subnet
+resource "aws_subnet" "db-sn" {
+  vpc_id     = aws_vpc.vpc.id
+  cidr_block = "10.0.3.0/24"
+  map_public_ip_on_launch = "false"
+
+  tags = {
+    Name = "login-database-subnet"
+  }
+}
