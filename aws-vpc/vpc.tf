@@ -134,3 +134,36 @@ resource "aws_network_acl_association" "db-nacl-asc" {
   network_acl_id = aws_network_acl.nacl.id
   subnet_id      = aws_subnet.db-sn.id
 }
+
+# Frontend Security Group
+resource "aws_security_group" "fe-sg" {
+  name        = "frontend-firewall"
+  description = "Allow frontend traffic"
+  vpc_id      = aws_vpc.vpc.id
+
+  tags = {
+    Name = "frontend-firewall"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "fe-sg-ssh" {
+  security_group_id = aws_security_group.fe-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 22
+  ip_protocol       = "tcp"
+  to_port           = 22
+}
+
+resource "aws_vpc_security_group_ingress_rule" "fe-sg-http" {
+  security_group_id = aws_security_group.fe-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  ip_protocol       = "tcp"
+  to_port           = 80
+}
+
+resource "aws_vpc_security_group_egress_rule" "fe-sg-ob" {
+  security_group_id = aws_security_group.fe-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
