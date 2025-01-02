@@ -116,3 +116,21 @@ resource "aws_network_acl" "nacl" {
     Name = "login-nacl"
   }
 }
+
+# Frontend Subnet Association
+resource "aws_network_acl_association" "fe-nacl-asc" {
+  network_acl_id = aws_network_acl.nacl.id
+  subnet_id      = aws_subnet.fe-sn.id
+}
+
+# Backend Subnet Association
+resource "aws_network_acl_association" "be-nacl-asc" {
+  network_acl_id = aws_network_acl.nacl.id
+  subnet_id      = aws_subnet.be-sn.id
+}
+
+# Database Subnet Association
+resource "aws_network_acl_association" "db-nacl-asc" {
+  network_acl_id = aws_network_acl.nacl.id
+  subnet_id      = aws_subnet.db-sn.id
+}
