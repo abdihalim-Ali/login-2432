@@ -61,3 +61,33 @@ resource "azurerm_network_interface" "fe-nic" {
     public_ip_address_id = azurerm_public_ip.fe-pip.id
   }
 }
+
+# VM
+resource "azurerm_linux_virtual_machine" "fe-vm" {
+  name                = "frontend-vm"
+  resource_group_name = azurerm_resource_group.example.name
+  location            = azurerm_resource_group.example.location
+  size                = "Standard_F2"
+  admin_username      = "ubuntu"
+  custom_data         = filebase64("script.sh")
+  network_interface_ids = [
+    azurerm_network_interface.fe-nic.id,
+  ]
+
+  admin_ssh_key {
+    username   = "ubuntu"
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts"
+    version   = "latest"
+  }
+}
