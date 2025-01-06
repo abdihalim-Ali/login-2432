@@ -16,7 +16,7 @@ resource "azurerm_virtual_network" "lms" {
 resource "azurerm_subnet" "lms-fe-sn" {
   name                 = "fronten-subnet"
   resource_group_name  = azurerm_resource_group.example.name
-  virtual_network_name = azurerm_virtual_network.example.name
+  virtual_network_name = azurerm_virtual_network.lms.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
@@ -24,7 +24,7 @@ resource "azurerm_subnet" "lms-fe-sn" {
 resource "azurerm_subnet" "lms-be-sn" {
   name                 = "backend-subnet"
   resource_group_name  = azurerm_resource_group.example.name
-  virtual_network_name = azurerm_virtual_network.example.name
+  virtual_network_name = azurerm_virtual_network.lms.name
   address_prefixes     = ["10.0.2.0/24"]
 }
 
@@ -32,6 +32,6 @@ resource "azurerm_subnet" "lms-be-sn" {
 resource "azurerm_subnet" "lms-db-sn" {
   name                 = "database-subnet"
   resource_group_name  = azurerm_resource_group.example.name
-  virtual_network_name = azurerm_virtual_network.example.name
+  virtual_network_name = azurerm_virtual_network.lms.name
   address_prefixes     = ["10.0.3.0/24"]
 }
