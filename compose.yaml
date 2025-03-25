@@ -1,24 +1,31 @@
+version: "3.8"
+
 services:
   student:
-    image: ravi2krishna/login-2432:1.1
+    image: abdihalimali/login-2432:1.1
     ports:
       - "8100:80"
+
   trainer:
-    image: ravi2krishna/login-2432:2.1
+    image: abdihalimali/login-2432:2.1
     ports:
       - "8200:80"
-  admin:
-    image: ravi2krishna/login-2432:3.1
+
+  management:
+    image: abdihalimali/login-2432:2.1
     ports:
       - "8300:80"
-  ecomm:
-    build: ./ecomm
-    image: ravi2krishna/ecomm
+
+  food:
+    build: ./food
+    image: abdihalimali/food
     ports:
       - "8400:80"
-  food:
-    image: nginx
-    volumes:
-      - /home/ubuntu/app-services/food:/usr/share/nginx/html
+
+  ecomm:
+    image: abdihalimali/ecomm
+    build: ./ecomm
     ports:
       - "8500:80"
+    volumes:
+      - /home/ubuntu/app-services/ecomm:/usr/share/nginx/html
